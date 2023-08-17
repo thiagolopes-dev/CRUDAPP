@@ -9,8 +9,12 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
+  },
+  {
+    path: 'produtos',
+    loadChildren: () => import('./pages/produtos/produtos.module').then(m => m.ProdutosModule)
+  },
 ];
 
 @NgModule({
@@ -19,4 +23,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
