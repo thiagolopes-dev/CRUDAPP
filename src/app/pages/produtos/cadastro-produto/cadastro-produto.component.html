@@ -1,3 +1,25 @@
-<p>
-  cadastro-produto works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cadastro de Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+
+    <ion-item>
+
+      <ion-input label="Descrição" labelPlacement="floating" type="text" [(ngModel)]="produto.descricao"
+        name="descricao" #descricao="ngModel" placeholder="Digite uma descrição"></ion-input>
+
+
+
+
+    </ion-item>
+
+
+  </form>
+</ion-content>

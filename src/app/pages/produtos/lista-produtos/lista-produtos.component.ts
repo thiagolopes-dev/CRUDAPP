@@ -14,7 +14,7 @@ export class ListaProdutosComponent implements OnInit {
       "id": 1,
       "descricao": 'X BacKteria',
       "categoria": 'lanche',
-      "preco": 20,
+      "preco": 12345.85,
       "status": true
     },
 
@@ -33,6 +33,31 @@ export class ListaProdutosComponent implements OnInit {
       "preco": 30,
       "status": true
     },
+
+    {
+      "id": 1,
+      "descricao": 'X BacKteria',
+      "categoria": 'lanche',
+      "preco": 12345.85,
+      "status": true
+    },
+
+    {
+      "id": 2,
+      "descricao": 'X Bacon',
+      "categoria": 'lanche',
+      "preco": 30,
+      "status": false
+    },
+
+    {
+      "id": 3,
+      "descricao": 'X Frango',
+      "categoria": 'lanche',
+      "preco": 30,
+      "status": true
+    },
+
 
 
   ]

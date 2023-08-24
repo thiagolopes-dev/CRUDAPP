@@ -1,6 +1,10 @@
 <ion-header>
-  <ion-toolbar color="primary"></ion-toolbar>
-  <ion-title>Lista de Produtos</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Produtos</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -8,13 +12,21 @@
     <ion-item *ngFor="let produto of produtos">
 
       <ion-label>
-        <h1>ID: {{produto.id}}</h1>
+        <h1>Código: {{produto.id}}</h1>
         <h1>Descrição: {{produto.descricao}}</h1>
         <h1>Categoria: {{produto.categoria}}</h1>
-        <h1>Preço: {{produto.preco}}</h1>
-        <h1>Status: {{produto.status }}</h1>
+        <h1>Preço: {{produto.preco | currency : 'BRL'}}</h1>
+        <h1>Status: {{produto.status ? 'Ativo' : 'Inativo' }}</h1>
       </ion-label>
     </ion-item>
 
   </ion-list>
+
+
 </ion-content>
+
+<ion-fab vertical="bottom" horizontal="end">
+  <ion-fab-button [routerLink]="['novo']" routerLinkActive="router-link-active">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
