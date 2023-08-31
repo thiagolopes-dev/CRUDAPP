@@ -8,7 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import ptBr from '@angular/common/locales/pt';
+import { CategoriasService } from './pages/categorias/categorias.service';
+import { ProdutosService } from './pages/produtos/produtos.service';
 registerLocaleData(ptBr);
 
 @NgModule({
@@ -17,6 +20,7 @@ registerLocaleData(ptBr);
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule
   ],
@@ -29,7 +33,9 @@ registerLocaleData(ptBr);
       provide: RouteReuseStrategy,
       useClass:
         IonicRouteStrategy,
-    }
+    },
+    CategoriasService,
+    ProdutosService
   ],
   bootstrap: [
     AppComponent
