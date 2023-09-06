@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-title>{{ editando ? 'Edição' : 'Cadastro'}} Categoria</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="categorias"></ion-back-button>
     </ion-buttons>
-    <ion-title>Cadastro de Categorias</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,13 +11,27 @@
   <form (ngSubmit)="onSubmit()" #form="ngForm">
 
     <ion-item>
-      <ion-input label="Descrição" labelPlacement="floating" type="text" [(ngModel)]="categoria.descricao"
-        name="descricao" #descricao="ngModel" placeholder="Digite uma descrição"></ion-input>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input [(ngModel)]="categorias.descricao" name="descricao" #descricao="ngModel" required></ion-input>
     </ion-item>
+  
 
-     <div class="ion-padding">
-      <ion-button expand="full">Salvar</ion-button>
-     </div>
-   
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-label position="stacked">Status</ion-label>
+            <ion-toggle [(ngModel)]="categorias.status" name="status" 
+            [checked]="true" #status="ngModel"></ion-toggle><br /><br />
+          </div>
+        </ion-col>
+      </ion-row>
+     
+    </ion-grid>
+
+  
+    <ion-button type="submit" class="ion-padding" [disabled]="form.invalid" color="primary" expand="block">
+      Salvar
+    </ion-button>
   </form>
 </ion-content>

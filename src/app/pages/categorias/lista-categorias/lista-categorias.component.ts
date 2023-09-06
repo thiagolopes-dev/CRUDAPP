@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Categorias } from 'src/app/core/models/categorias.model';
+import { AlertService } from 'src/app/core/models/services/alert.service';
+import { ToastService } from 'src/app/core/models/services/toast.service';
 import { CategoriasService } from '../categorias.service';
 
 @Component({
@@ -9,9 +10,11 @@ import { CategoriasService } from '../categorias.service';
 })
 export class ListaCategoriasComponent implements OnInit {
 
-  categorias: Categorias[] = [];
+  categorias: any[] = [];
   constructor(
-    private categService: CategoriasService
+    private categService: CategoriasService,
+    private alert: AlertService,
+    private toast: ToastService
   ) { }
 
   ngOnInit() {
@@ -21,21 +24,26 @@ export class ListaCategoriasComponent implements OnInit {
     this.carregarLista();
   }
 
-  // carregarLista(){
-  //   this.categService.getAll()
-  //   .then(obj => {
-  //     this.categorias = obj;
-  //   });
-  // }
+  carregarLista() {
+    this.categService.getAll()
+      .then(obj => {
+        this.categorias = obj;
+      })
+  }
 
-  async carregarLista() {
+  remove(categorias: any) {
+    this.alert.showConfirmDelete(categorias.descricao, () => this.executeRemove(categorias));
+  }
+
+  executeRemove(categoria: any){
     try {
-      const obj = await this.categService.getAll();
-      if (obj) {
-        this.categorias = obj as Categorias[];
-      }
+      const index = this.categorias.indexOf(categoria);
+      this.categorias.splice(index, 1);
+      this.categService.delete(categoria.id);
+
+      this.toast.showSucess('Categoria removido com sucesso');
     } catch (error) {
-      console.error("Erro ao carregar categorias:", error);
+      this.toast.showError('Erro ao remover o categoria');
     }
   }
   

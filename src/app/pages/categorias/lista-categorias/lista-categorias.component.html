@@ -2,6 +2,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <ion-back-button color="danger"></ion-back-button>
     </ion-buttons>
     <ion-title>Categorias</ion-title>
   </ion-toolbar>
@@ -10,21 +11,41 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let categoria of categorias">
-
+      
       <ion-label>
-        <h1>Código: {{categoria.id}}</h1>
-        <h1>Descrição: {{categoria.descricao}}</h1>
-        <h1>Status: {{categoria.status ? 'Ativo' : 'Inativo' }}</h1>
-      </ion-label>
+        <p>Descrição:</p>
+        <h2>{{categoria.descricao}}</h2>
+
+        <p>Status</p>
+        <h2>{{categoria.status ? 'Ativo' : 'Inativo'}}</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="primary" 
+            [routerLink]="['/categorias', categoria.id]">
+              <ion-icon slot="start" name="pencil"></ion-icon>
+              Editar
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" color="danger" fill="outline" 
+            (click)="remove(categoria)">
+              <ion-icon slot="start" name="trash"></ion-icon>
+              Excluir
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-label>
     </ion-item>
 
+  
+   
   </ion-list>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="primary">
+    <ion-fab-button [routerLink]="['novo']" routerLinkActive="router-link-active" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
-
-<ion-fab vertical="bottom" horizontal="end">
-  <ion-fab-button [routerLink]="['novo']" routerLinkActive="router-link-active">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>

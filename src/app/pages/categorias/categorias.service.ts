@@ -1,6 +1,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Categorias } from 'src/app/core/models/categorias.model';
 import { environment } from 'src/environments/environment';
 
@@ -9,21 +10,42 @@ import { environment } from 'src/environments/environment';
 })
 export class CategoriasService {
 
-  apiUrl: string = '';
-constructor(
-  private http: HttpClient
-) { }
+  apiURL: string = '';
+
+  constructor(
+    private http: HttpClient
+  ) {
+    //FIXME Nao esquecer de tirar url MOCK
+    this.apiURL = `${environment.mockAPI}/categorias`;
+  }
 
 
- getAll(){
-  return this.http.get(`${environment.mockAPI}/categorias`)
-  .toPromise()
-  .then(response => response);
- }
+  getAll() {
+    return firstValueFrom(
+      this.http.get<any>(`${this.apiURL}`)
+    )
+      .then(response => response);
+  }
+  getById(id: string) {
+    return firstValueFrom(
+      this.http.get<any>(`${this.apiURL}/${id}`)
+    )
+  }
 
- create(categoria: Categorias){
-  return this.http.post<any>(`${environment.mockAPI}/categorias`,  categoria)
-  .toPromise();
+  create(categoria: Categorias) {
+    return firstValueFrom(
+      this.http.post<any>(`${this.apiURL}`, categoria)
+    )
+  }
+  update(id: string, categoria: Categorias) {
+    return firstValueFrom(
+      this.http.put<any>(`${this.apiURL}/${id}`, categoria)
+    )
+  }
 
- }
+  delete(id: string) {
+    return firstValueFrom(
+      this.http.delete(`${this.apiURL}/${id}`)
+    )
+  }
 }
