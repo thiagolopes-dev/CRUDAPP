@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Cadastro de Produtos</ion-title>
+    <ion-title>{{ editando ? 'Edição' : 'Cadastro'}} Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,34 +11,39 @@
   <form (ngSubmit)="onSubmit()" #form="ngForm">
 
     <ion-item>
-      <ion-input label="Descrição" labelPlacement="floating" type="text" [(ngModel)]="produto.descricao"
+      <ion-input label="Descrição" labelPlacement="floating" type="text" [(ngModel)]="produtos.descricao"
         name="descricao" #descricao="ngModel" placeholder="Digite uma descrição"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input label="Preço" type="number" labelPlacement="floating" [(ngModel)]="produto.preco"
+      <ion-input label="Preço" type="number" labelPlacement="floating" [(ngModel)]="produtos.preco"
         name="preco" #preco="ngModel" placeholder="Digite um preço"></ion-input>
     </ion-item>
 
-    <ion-list>
-      <ion-item>
-        <ion-select label="Selecione uma categoria..." placeholder="Categorias">
-          <ion-select-option value="apple">Apple</ion-select-option>
-          <ion-select-option value="banana">Banana</ion-select-option>
-          <ion-select-option value="orange">Orange</ion-select-option>
-        </ion-select>
-      </ion-item>
-    
-      
-    
-     
-    
-   
-    </ion-list>
+    <ion-item>
+      <ion-label position="stacked">Categorias</ion-label>
+      <ion-select placeholder="" [(ngModel)]="produtos.categoria" name="categoria" #categoria="ngModel" required>
+        <ion-select-option *ngFor="let categoria of categorias" 
+        [value]="categoria.id">
+        {{categoria.descricao}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-center">
+            <ion-label position="stacked">Status</ion-label>
+            <ion-toggle [(ngModel)]="produtos.status" name="status" 
+            [checked]="true" #status="ngModel"></ion-toggle><br /><br />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
      <div class="ion-padding">
-      <ion-button expand="full">Salvar</ion-button>
+      <ion-button type="submit" expand="full">Salvar</ion-button>
      </div>
    
-
   </form>
 </ion-content>

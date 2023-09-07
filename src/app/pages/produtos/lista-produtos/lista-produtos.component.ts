@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/core/models/services/alert.service';
+import { ToastService } from 'src/app/core/models/services/toast.service';
+import { CategoriasService } from '../../categorias/categorias.service';
+import { ProdutosService } from '../produtos.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -7,65 +11,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaProdutosComponent implements OnInit {
 
-  // produtos: any[] = [];
-
-  produtos = [
-    {
-      "id": 1,
-      "descricao": 'X BacKteria',
-      "categoria": 'lanche',
-      "preco": 12345.85,
-      "status": true
-    },
-
-    {
-      "id": 2,
-      "descricao": 'X Bacon',
-      "categoria": 'lanche',
-      "preco": 30,
-      "status": false
-    },
-
-    {
-      "id": 3,
-      "descricao": 'X Frango',
-      "categoria": 'lanche',
-      "preco": 30,
-      "status": true
-    },
-
-    {
-      "id": 1,
-      "descricao": 'X BacKteria',
-      "categoria": 'lanche',
-      "preco": 12345.85,
-      "status": true
-    },
-
-    {
-      "id": 2,
-      "descricao": 'X Bacon',
-      "categoria": 'lanche',
-      "preco": 30,
-      "status": false
-    },
-
-    {
-      "id": 3,
-      "descricao": 'X Frango',
-      "categoria": 'lanche',
-      "preco": 30,
-      "status": true
-    },
-
-
-
-  ]
-
-
-  constructor() { }
+  produtos: any[] = [];
+  constructor(
+    private produtoService: ProdutosService,
+    private categoriaService: CategoriasService,
+    private alert: AlertService,
+    private toast: ToastService
+  ) { }
 
   ngOnInit() {
   }
 
+  ionViewDidEnter(){
+    this.carregarLista();
+  }
+
+  carregarLista() {
+    this.produtoService.getAll()
+      .then(obj => {
+        this.produtos = obj;
+        console.log(obj);
+      })
+  }
+  
+  remove(produtos: any) {
+    this.alert.showConfirmDelete(produtos.descricao, () => this.executeRemove(produtos));
+  }
+
+  executeRemove(categoria: any){
+    try {
+      const index = this.produtos.indexOf(categoria);
+      this.produtos.splice(index, 1);
+      this.produtoService.delete(categoria.id);
+
+      this.toast.showSucess('Produto removido com sucesso');
+    } catch (error) {
+      this.toast.showError('Erro ao remover o produto');
+    }
+  }
 }
